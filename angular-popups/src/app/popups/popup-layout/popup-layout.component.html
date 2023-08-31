@@ -1,0 +1,12 @@
+<div class="popup__overlay">
+  <div class="popup__wrapper">
+    <div class="popup__header">
+      <h3>{{title}}</h3>
+      <button (click)="close()">
+        <object data="../../../assets/icons/close.svg"></object>
+      </button>
+    </div>
+    <ng-content></ng-content>
+
+  </div>
+</div>

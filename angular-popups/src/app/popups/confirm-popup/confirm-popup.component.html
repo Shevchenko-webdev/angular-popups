@@ -1,0 +1,11 @@
+<div class="popup__content">
+  <h4 class="popup__title">{{title}}</h4>
+  <div class="popup__description">
+    <ng-content></ng-content>
+    <ng-container *ngIf="description"></ng-container>
+  </div>
+</div>
+<div class="popup__actions">
+  <button class="btn btn--blue" (click)="confirm()">Sure!</button>
+  <button class="btn btn--red" (click)="close()">Never!</button>
+</div>

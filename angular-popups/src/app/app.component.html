@@ -1,0 +1,24 @@
+<main>
+  <div class="buttons">
+    <button class="btn btn--red" (click)="popupsService.popup = 'confirm'">Delete product</button>
+    <button class="btn btn--red" (click)="popupsService.popup = 'copy-code'">Claim code</button>
+  </div>
+</main>
+
+<app-popup-layout *ngIf="popupsService.popup === 'confirm'" [title]="'Delete project?'" (onClose)="popupsService.hidePopup()">
+  <div confirm-popup
+       class="popup__content-wrapper"
+       [title]="'Are you sure?'"
+       (onClose)="popupsService.hidePopup()"
+       (onConfirm)="deleteProduct()">
+    <p>The deletion of product cannot be undone</p>
+    <p>Confirm your action by clicking the Confirm button. Otherwise, click Cancel</p>
+  </div>
+</app-popup-layout>
+
+<app-popup-layout *ngIf="popupsService.popup === 'copy-code'" [title]="'Copy code'" (onClose)="popupsService.hidePopup()">
+  <div copy-code-popup
+       class="popup__content-wrapper"
+       (onClose)="popupsService.hidePopup()"></div>
+</app-popup-layout>
+
