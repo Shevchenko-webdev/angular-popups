@@ -1,27 +1,54 @@
-# AngularPopups
+# Angular Popups
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+The project contains a method of implementation by the management of pop-ups
 
-## Development server
+## How to start
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+1. `npm install` to install all necessary dependencies
+2. `ng serve` to run project on localhost
 
-## Code scaffolding
+## Description
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+Project contains:
+### `popups.module.ts`
+Contains popup layout component, confirm and copy code popup components and popups service
 
-## Build
+### `PopupsService`
+Service uses to store type of popups (unique name) and current active popup. Also, it contains getter and setter for active popup and method to hide active popup.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+### `PopupLayoutComponent`
+The component is used to place inside the content of any pop-up windows of the program. Inside the markup of this component there is a popup overlay, a popup wrapper, and a popup header. Additionally, it includes the `<ng-content>` tag to allow the developer to pass any individual popup component inside layout.
 
-## Running unit tests
+### `ConfirmPopupComponent`
+- individual popup component
+- contains markup for confirm popup with title, description and 2 action buttons
+- title can be passed via `@Input` decorator
+- description can be passed via `@Input` decorator of `<ng-content>` tag.
+- action buttons emits 2 `@Output` events (`onConfirm` and `onClose`)
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+### `CopyCodeComponent`
+- individual popup component
+- contains markup for copy code popup with title, description and action button
+- title can be passed via `@Input` decorator
+- description is static
+- action button emit @Output `onClose` event
 
-## Running end-to-end tests
+### `Popup` base component
+- base class for individual popup component
+- can store all logic that is repeated by several popups
+- now contains `@Output` `onClose` event and `close()` method that uses for both individual popup component
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+### `AppComponent`
+- .html file of this component contains buttons that allows to open appropriate popup and groups of `popup-layout`+`individual-popup-component` with all necessary for popup input data
+- .ts file of this component contains all logic, that should be called on popup's buttons click
 
-## Further help
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## How to add new popup
+1. create individual popup component
+2. use `Popup` base component to add logic that is repeated by several popups
+3. use individual popup .scss file to add styles, that should be implemented only to current popup
+4. add unique popup type name to `PopupType` type inside `PopupsService`
+5. add group of `popup-layout`+`individual-popup-component`. Path all necessary for components data
+6. add trigger to open popup using `PopupsService` setter
+7. add trigger to close popup using `PopupsService` `hidePopup()` method 
+8. Add necessary side logic on popup `@Output` event emit
